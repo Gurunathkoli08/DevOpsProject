@@ -1,0 +1,10 @@
+- name: Deploy Java Website
+  hosts: localhost
+  tasks:
+    - name: Run website container
+      docker_container:
+        name: java-static-web
+        image: java-static-web
+        state: started
+        published_ports:
+          - "8085:8090"
