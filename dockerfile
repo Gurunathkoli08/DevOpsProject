@@ -1,12 +1,14 @@
-FROM tomcat:9.0
+# Use official Nginx image
+FROM nginx:alpine
 
-# Clean default apps
-RUN rm -rf /usr/local/tomcat/webapps/*
+# Remove default Nginx web files
+RUN rm -rf /usr/share/nginx/html/*
 
-# Copy your WAR file into Tomcat webapps directory
-COPY JavaStatickWebsite.war /usr/local/tomcat/webapps/
+# Copy your website files into Nginx HTML directory
+COPY student_admission_website/ /usr/share/nginx/html
 
-# Expose port 8085
-EXPOSE 8080
+# Expose port 80
+EXPOSE 80
 
-CMD ["catalina.sh", "run"]
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
