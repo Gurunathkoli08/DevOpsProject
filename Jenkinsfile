@@ -12,7 +12,9 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                sh 'docker run -d -p 8080:80 --name admission-site student-admission-site'
+                script {
+                    dockerImage.run('-d -p 8080:80 --name admission-site')
+                }
             }
         }
     }
