@@ -4,17 +4,19 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                script {
-                    dockerImage = docker.build("student-admission-site")
-                }
+                sh 'docker build -t student-admission-site .'
+            }
+        }
+
+        stage('Remove Existing Container') {
+            steps {
+                sh 'docker rm -f admission-site || true'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                script {
-                    dockerImage.run('-d -p 8080:80 --name admission-site')
-                }
+                sh 'docker run -d -p 8080:80 --name admission-site student-admission-site'
             }
         }
     }
